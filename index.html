@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DocTranslator — Terjemahkan Dokumen Tanpa Merusak Format</title>
+<meta name="description" content="Terjemahkan dokumen Word, PDF, PowerPoint, Excel, dan teks ke 80+ bahasa langsung di browser. Gratis, tanpa daftar, format asli tetap utuh." />
+<meta name="theme-color" content="#2563eb" />
+<meta property="og:title" content="DocTranslator — Terjemahkan Dokumen Tanpa Merusak Format" />
+<meta property="og:description" content="DOCX, PDF, PPTX, XLSX, TXT, SRT, HTML ke 80+ bahasa. Gratis dan tanpa batas halaman." />
+<meta property="og:type" content="website" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232563eb'/%3E%3Cpath d='M20 16h16l10 10v22a2 2 0 0 1-2 2H20a2 2 0 0 1-2-2V18a2 2 0 0 1 2-2z' fill='white'/%3E%3Cpath d='M36 16v10h10' fill='%23bfdbfe'/%3E%3Cpath d='M24 36h16M24 42h10' stroke='%232563eb' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/style.css" />
+<script defer src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#translator">Lewati ke penerjemah</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="./">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M6 3h7l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z" fill="currentColor" opacity=".18"/><path d="M6 3h7l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="1.6"/><path d="M13 3v5h5M8.5 13H15M8.5 16.5h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </span>
+      <span class="brand-text">Doc<strong>Translator</strong></span>
+    </a>
+
+    <nav class="main-nav" aria-label="Navigasi utama">
+      <a href="#translator">Terjemahkan</a>
+      <a href="#format">Format</a>
+      <a href="#cara-kerja">Cara kerja</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+
+    <div class="header-actions">
+      <button class="icon-btn" id="themeToggle" type="button" aria-label="Ubah tema" title="Ubah tema">
+        <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.8 6.8 0 0 0 9.8 9.8Z"/></svg>
+      </button>
+      <a class="btn btn-ghost btn-sm" href="https://github.com/agusfm97" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49v-1.7c-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.57 2.34 1.12 2.91.86.09-.66.35-1.12.63-1.38-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05a9.3 9.3 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9v2.81c0 .27.18.6.69.49A10.05 10.05 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg>
+        <span>GitHub</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <span class="pill">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m5 13 4 4L19 7"/></svg>
+        Gratis · Tanpa daftar · Tanpa batas halaman
+      </span>
+      <h1>Terjemahkan dokumen <span class="grad">tanpa merusak format</span></h1>
+      <p class="lead">Unggah DOCX, PDF, PPTX, XLSX, TXT, SRT, atau HTML. Teks diterjemahkan ke 80+ bahasa,
+        sementara tabel, gambar, dan tata letaknya tetap seperti aslinya.</p>
+    </div>
+  </section>
+
+  <section class="wrap" id="translator">
+    <div class="card translator-card">
+      <div class="tabs" role="tablist" aria-label="Jenis terjemahan">
+        <button class="tab is-active" role="tab" aria-selected="true" aria-controls="panel-doc" id="tab-doc" data-tab="doc">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3h7l5 5v13H6z"/><path d="M13 3v5h5"/></svg>
+          Dokumen
+        </button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="panel-text" id="tab-text" data-tab="text">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+          Teks
+        </button>
+      </div>
+
+      <div class="lang-bar">
+        <div class="lang-field" data-lang="source">
+          <span class="lang-label">Dari</span>
+          <button type="button" class="lang-btn" aria-haspopup="listbox" aria-expanded="false">
+            <span class="lang-name">Deteksi otomatis</span>
+            <svg class="chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+        </div>
+
+        <button class="swap-btn" id="swapBtn" type="button" title="Tukar bahasa" aria-label="Tukar bahasa">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4 4 7l3 3"/><path d="M4 7h11a4 4 0 0 1 0 8h-2"/><path d="m17 20 3-3-3-3"/><path d="M20 17H9a4 4 0 0 1 0-8h2"/></svg>
+        </button>
+
+        <div class="lang-field" data-lang="target">
+          <span class="lang-label">Ke</span>
+          <button type="button" class="lang-btn" aria-haspopup="listbox" aria-expanded="false">
+            <span class="lang-name">Indonesia</span>
+            <svg class="chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Panel dokumen -->
+      <div class="panel" id="panel-doc" role="tabpanel" aria-labelledby="tab-doc">
+        <div class="dropzone" id="dropzone" tabindex="0" role="button">
+          <input type="file" id="fileInput" multiple hidden
+                 accept=".doc,.docx,.pdf,.ppt,.pptx,.xls,.xlsx,.txt,.md,.csv,.srt,.vtt,.html,.htm" />
+          <div class="dz-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4m0 0L7 9m5-5 5 5"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+          </div>
+          <p class="dz-title">Tarik &amp; lepas dokumen di sini</p>
+          <p class="dz-sub">atau <span class="link-like">pilih file</span> dari perangkat Anda</p>
+          <p class="dz-meta">Maks. 60 MB · bisa beberapa file sekaligus</p>
+        </div>
+
+        <ul class="file-list" id="fileList" aria-live="polite"></ul>
+
+        <div class="formats-row" aria-label="Format yang didukung">
+          <span class="fmt fmt-docx">DOCX</span>
+          <span class="fmt fmt-pdf">PDF</span>
+          <span class="fmt fmt-pptx">PPTX</span>
+          <span class="fmt fmt-xlsx">XLSX</span>
+          <span class="fmt">TXT</span>
+          <span class="fmt">MD</span>
+          <span class="fmt">SRT</span>
+          <span class="fmt">HTML</span>
+        </div>
+
+        <div class="option-row">
+          <label for="pdfMode">Mode PDF</label>
+          <select id="pdfMode" class="select">
+            <option value="layout">Pertahankan tata letak</option>
+            <option value="text">Susun ulang teks</option>
+          </select>
+          <span class="option-hint" id="pdfModeHint">Halaman asli dipertahankan, teks lama diganti terjemahan.</span>
+        </div>
+
+        <button class="btn btn-primary btn-lg" id="translateBtn" type="button" disabled>
+          <span>Terjemahkan dokumen</span>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+
+      <!-- Panel teks -->
+      <div class="panel" id="panel-text" role="tabpanel" aria-labelledby="tab-text" hidden>
+        <div class="text-work">
+          <div class="text-col">
+            <label class="text-label" for="sourceText">Teks asli</label>
+            <textarea id="sourceText" class="textarea" placeholder="Tempel atau tulis teks di sini…" spellcheck="false"></textarea>
+            <div class="text-foot"><span id="charCount">0 karakter</span>
+              <button class="link-btn" id="pasteBtn" type="button">Tempel dari clipboard</button></div>
+          </div>
+          <div class="text-col">
+            <label class="text-label" for="targetText">Hasil terjemahan</label>
+            <textarea id="targetText" class="textarea" readonly placeholder="Hasil terjemahan akan muncul di sini…"></textarea>
+            <div class="text-foot">
+              <span id="textStatus"></span>
+              <div class="text-actions">
+                <button class="link-btn" id="copyBtn" type="button">Salin</button>
+                <button class="link-btn" id="downloadTextBtn" type="button">Unduh .txt</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-lg" id="translateTextBtn" type="button">
+          <span>Terjemahkan teks</span>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+
+      <!-- Progres -->
+      <div class="progress-card" id="progressCard" hidden>
+        <div class="progress-head">
+          <span class="spinner" aria-hidden="true"></span>
+          <div>
+            <p class="progress-title" id="progressTitle">Menerjemahkan…</p>
+            <p class="progress-sub" id="progressSub">Menyiapkan dokumen</p>
+          </div>
+          <span class="progress-pct" id="progressPct">0%</span>
+        </div>
+        <div class="bar"><div class="bar-fill" id="barFill"></div></div>
+        <button class="btn btn-ghost btn-sm cancel-btn" id="cancelBtn" type="button">Batalkan</button>
+      </div>
+
+      <!-- Hasil -->
+      <div class="result-card" id="resultCard" hidden>
+        <div class="result-head">
+          <div class="check" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>
+          </div>
+          <div class="result-titles">
+            <p class="result-title">Terjemahan selesai</p>
+            <p class="result-sub" id="resultSub"></p>
+          </div>
+          <button class="icon-btn" id="closeResult" type="button" aria-label="Tutup hasil">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+          </button>
+        </div>
+        <div class="result-grid" id="resultGrid"></div>
+        <details class="preview" id="previewWrap" hidden>
+          <summary>Pratinjau teks hasil terjemahan</summary>
+          <pre id="previewText"></pre>
+        </details>
+      </div>
+
+      <p class="privacy-note">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+        File Anda tidak diunggah ke server kami — semua diproses di browser. Hanya teks yang dikirim ke Google Translate untuk diterjemahkan.
+      </p>
+    </div>
+  </section>
+
+  <section class="wrap features" id="format">
+    <div class="section-head">
+      <h2>Format yang didukung</h2>
+      <p>Setiap format ditangani secara khusus agar struktur dan gayanya tetap rapi.</p>
+    </div>
+    <div class="cards">
+      <article class="feature">
+        <div class="f-icon f-docx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3h7l5 5v13H6z"/><path d="M13 3v5h5M9 13h6M9 17h4"/></svg></div>
+        <h3>Word (.docx)</h3>
+        <p>Paragraf, tabel, gambar, header/footer, dan gaya teks dipertahankan. Nama file hasil tetap sama dengan akhiran bahasa.</p>
+      </article>
+      <article class="feature">
+        <div class="f-icon f-pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3h7l5 5v13H6z"/><path d="M13 3v5h5"/><path d="M9 13h1.5a1.5 1.5 0 0 1 0 3H9v2"/><path d="M14 13v5h1a2.5 2.5 0 0 0 0-5z"/></svg></div>
+        <h3>PDF</h3>
+        <p>Dua mode: pertahankan tata letak (halaman asli + teks baru) atau susun ulang teks menjadi PDF yang bersih.</p>
+      </article>
+      <article class="feature">
+        <div class="f-icon f-pptx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v4M8 20h8"/></svg></div>
+        <h3>PowerPoint (.pptx)</h3>
+        <p>Semua slide dan catatan pembicara diterjemahkan. Desain, gambar, dan animasi tidak berubah.</p>
+      </article>
+      <article class="feature">
+        <div class="f-icon f-xlsx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 9h16M4 15h16M10 3v18"/></svg></div>
+        <h3>Excel (.xlsx)</h3>
+        <p>Sel, rumus, dan format angka aman. Hanya teks pada sel dan komentar yang diterjemahkan.</p>
+      </article>
+      <article class="feature">
+        <div class="f-icon f-txt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 6h14M5 11h14M5 16h9"/></svg></div>
+        <h3>Teks, Markdown, CSV</h3>
+        <p>Baris kosong dan struktur file tetap terjaga. Blok kode pada Markdown dilewati.</p>
+      </article>
+      <article class="feature">
+        <div class="f-icon f-srt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 15h4M13 15h4M7 11h10"/></svg></div>
+        <h3>Subtitle &amp; HTML</h3>
+        <p>SRT/VTT: nomor dan timestamp tidak disentuh. HTML: tag dan atribut tetap utuh.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="wrap steps" id="cara-kerja">
+    <div class="section-head">
+      <h2>Tiga langkah saja</h2>
+      <p>Tanpa instalasi, tanpa akun, tanpa batas jumlah halaman.</p>
+    </div>
+    <ol class="step-list">
+      <li>
+        <span class="step-num">1</span>
+        <h3>Pilih bahasa</h3>
+        <p>Biarkan “Deteksi otomatis” untuk bahasa sumber, lalu pilih bahasa tujuan.</p>
+      </li>
+      <li>
+        <span class="step-num">2</span>
+        <h3>Unggah dokumen</h3>
+        <p>Tarik file ke area unggah. Anda bisa memproses beberapa file sekaligus.</p>
+      </li>
+      <li>
+        <span class="step-num">3</span>
+        <h3>Unduh hasilnya</h3>
+        <p>Tekan Terjemahkan, tunggu sebentar, lalu unduh file dengan format yang sama.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="wrap faq" id="faq">
+    <div class="section-head">
+      <h2>Pertanyaan yang sering diajukan</h2>
+    </div>
+    <div class="faq-list">
+      <details>
+        <summary>Apakah benar-benar gratis dan tanpa batas?</summary>
+        <p>Ya. Aplikasi ini berjalan sepenuhnya di browser Anda dan tidak memakai server sendiri, sehingga tidak ada biaya per halaman. Satu-satunya batas adalah ukuran file (60 MB) agar browser tidak kehabisan memori.</p>
+      </details>
+      <details>
+        <summary>Apakah file saya diunggah ke server?</summary>
+        <p>Tidak. Dokumen dibaca dan ditulis ulang di perangkat Anda. Hanya potongan teks yang dikirim ke endpoint publik Google Translate untuk diterjemahkan — sama seperti saat Anda membuka Google Translate.</p>
+      </details>
+      <details>
+        <summary>Apakah format dan gambar tetap utuh?</summary>
+        <p>Untuk DOCX, PPTX, XLSX, dan HTML, hanya teks yang diganti, sehingga gambar, tabel, warna, dan tata letak tetap. Untuk PDF, pilih mode “Pertahankan tata letak” agar halaman asli dipertahankan dan teks terjemahan ditimpa di posisinya.</p>
+      </details>
+      <details>
+        <summary>Kenapa hasil PDF kadang kurang rapi?</summary>
+        <p>PDF tidak menyimpan struktur paragraf, jadi posisi teks ditebak dari koordinat. Jika hasilnya kurang nyaman dibaca, gunakan mode “Susun ulang teks” untuk PDF yang mengalir dari atas ke bawah. Hasil PDF berupa halaman gambar beresolusi tinggi, sehingga teksnya belum bisa dipilih atau dicari; DOCX, PPTX, XLSX, dan HTML tetap berupa teks asli yang bisa diedit.</p>
+      </details>
+      <details>
+        <summary>Bahasa apa saja yang didukung?</summary>
+        <p>Lebih dari 80 bahasa, termasuk Indonesia, Inggris, Jepang, Korea, Mandarin, Arab, Hindi, Spanyol, Prancis, Jerman, dan bahasa-bahasa daerah seperti Jawa dan Sunda.</p>
+      </details>
+      <details>
+        <summary>Bisakah saya men-deploy versi saya sendiri?</summary>
+        <p>Bisa. Seluruh kode tersedia di GitHub dan aplikasi ini adalah situs statis — cukup aktifkan GitHub Pages pada repositori Anda. Petunjuk lengkap ada di README.</p>
+      </details>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div class="footer-brand">
+      <span class="brand-text">Doc<strong>Translator</strong></span>
+      <p>Penerjemah dokumen gratis yang berjalan di browser. Dibuat dengan JavaScript, tanpa server.</p>
+    </div>
+    <div class="footer-links">
+      <a href="#translator">Terjemahkan</a>
+      <a href="#format">Format</a>
+      <a href="#faq">FAQ</a>
+      <a href="https://github.com/agusfm97" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>© <span id="year">2026</span> DocTranslator. Teks diterjemahkan oleh Google Translate.</span>
+    <span>Dibuat oleh <a href="https://github.com/agusfm97" target="_blank" rel="noopener">agusfm97</a></span>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script type="module" src="assets/js/app.js"></script>
+</body>
+</html>
